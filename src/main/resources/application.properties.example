@@ -1,0 +1,12 @@
+spring.application.name=portfolio
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/portfolio
+spring.datasource.username=postgres
+spring.datasource.password=your_password_here
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.open-in-view=false
+
+notification.slack.webhook-url=your_slack_webhook_url_here
