@@ -107,3 +107,13 @@ git clone https://github.com/K-sogo070/web-scraping-notifier.git
 
 4. アプリを起動
 ./mvnw spring-boot:run
+
+5. `monitor_targets` テーブルに監視したいサイトを登録（例）
+```sql
+   INSERT INTO monitor_targets
+       (site_name, base_url, css_selector, crawl_interval_minutes, robots_txt_compliant, is_active)
+   VALUES
+       ('サイト名', 'https://example.com/news/', 'CSSセレクタ', 60, true, true);
+```
+
+6. 設定した間隔ごとに自動でクロールが実行され、新着があればSlackに通知されます
