@@ -6,33 +6,97 @@
 
 body {
     font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
-    background-color: #f5f5f7;
-    color: #1d1d1f;
+    background: linear-gradient(180deg, #14152b 0%, #241f3d 35%, #4a2a3a 70%, #6b3226 100%);
+    background-attachment: fixed;
+    color: #f0e6d8;
     line-height: 1.6;
+    min-height: 100vh;
 }
 
 .app-header {
-    background-color: #1d1d1f;
+    background: transparent;
     color: #ffffff;
-    padding: 20px 16px;
+    padding: 32px 16px 24px;
     text-align: center;
+    position: relative;
+}
+
+.app-header::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #ff9a5c, #d9491f);
+    margin: 14px auto 0;
+    border-radius: 2px;
 }
 
 .app-header h1 {
-    font-size: 1.3rem;
-    font-weight: 600;
+    font-family: "Arial", "Helvetica", sans-serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-shadow: 0 0 24px rgba(255, 154, 92, 0.7), 0 0 48px rgba(217, 73, 31, 0.4);
+    line-height: 1.2;
+}
+
+.app-subtitle {
+    font-size: 0.75rem;
+    color: #c9a98a;
+    letter-spacing: 0.1em;
+    margin-top: 6px;
 }
 
 .container {
     max-width: 700px;
     margin: 0 auto;
-    padding: 16px;
+    padding: 20px 16px;
 }
 
 .loading {
     text-align: center;
     padding: 40px 0;
-    color: #86868b;
+    color: #8a7f6f;
+}
+
+.filter-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-chip {
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 18px;
+    border-radius: 4px;
+    border: 1px solid #4a3626;
+    background-color: #1f1912;
+    color: #d9c9b0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.filter-chip:hover {
+    border-color: #d9491f;
+    color: #ffffff;
+}
+
+.filter-chip.active {
+    background: linear-gradient(135deg, #d9491f 0%, #a8280f 100%);
+    border-color: #d9491f;
+    color: #ffffff;
+    box-shadow: 0 0 16px rgba(217, 73, 31, 0.5);
 }
 
 .item-list {
@@ -40,58 +104,86 @@ body {
 }
 
 .item-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background-color: rgba(32, 24, 22, 0.55);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(217, 73, 31, 0.25);
+    border-left: 3px solid #d9491f;
+    border-radius: 6px;
+    padding: 18px;
+    margin-bottom: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 .item-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-color: #ff9a5c;
+    box-shadow: 0 4px 24px rgba(255, 154, 92, 0.25);
 }
 
 .item-site-name {
     display: inline-block;
-    font-size: 0.75rem;
-    color: #0071e3;
-    background-color: #e8f2fc;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #ff9a5c;
+    background-color: rgba(217, 73, 31, 0.12);
+    border: 1px solid rgba(217, 73, 31, 0.4);
     padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 8px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
 }
 
 .item-title {
     font-size: 1rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    color: #1d1d1f;
+    margin-bottom: 10px;
+    color: #f5ece0;
     text-decoration: none;
     display: block;
 }
 
 .item-title:hover {
-    color: #0071e3;
+    color: #ff9a5c;
 }
 
 .item-date {
-    font-size: 0.8rem;
-    color: #86868b;
+    font-size: 0.78rem;
+    color: #7a6f60;
+    letter-spacing: 0.03em;
 }
 
-/* PC等、画面幅が広い場合の調整 */
+@keyframes highlightNew {
+    from {
+        background-color: #3a1f10;
+        border-left-color: #ff9a5c;
+    }
+    to {
+        background-color: #201811;
+        border-left-color: #d9491f;
+    }
+}
+
+.item-card-new {
+    animation: highlightNew 2.5s ease-out;
+}
+
 @media (min-width: 600px) {
     .app-header h1 {
-        font-size: 1.6rem;
+        font-size: 3.6rem;
+    }
+
+    .filter-bar {
+        flex-wrap: wrap;
+        overflow-x: visible;
     }
 
     .item-card {
-        padding: 20px 24px;
+        padding: 22px 26px;
     }
 
     .item-title {
         font-size: 1.1rem;
     }
+    
 }
